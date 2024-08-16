@@ -59,8 +59,9 @@ function App() {
       sourceFilter: source,
       categoryFilter: category,
     }
+
     const fetchedArticles = await fetchArticles(options)
-    setArticles(fetchedArticles)
+    setArticles(fetchedArticles || [])
     setLoading(false)
   }, [keywordTerm, fromDate, toDate, source, category])
 
@@ -70,9 +71,7 @@ function App() {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      if (keywordTerm) {
-        loadArticles()
-      }
+      loadArticles()
     }, 500)
 
     return () => {
