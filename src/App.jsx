@@ -18,6 +18,9 @@ function App() {
   const [category, setCategory] = useState("all")
   const [loading, setLoading] = useState(false)
 
+  const [customStartDate, setCustomStartDate] = useState(new Date())
+  const [customEndDate, setCustomEndDate] = useState(null)
+
   const categoryOptions = [
     { value: "all", label: "All" },
     { value: "cars", label: "Cars" },
@@ -44,10 +47,13 @@ function App() {
 
   const onDatePickerChange = (dates) => {
     const [start, end] = dates
+    setCustomStartDate(start)
+    setCustomEndDate(end)
+    if (start === null || end === null) return
     const formattedStartDate = moment(start).format("YYYY-MM-DD")
     const formattedEndDate = moment(end).format("YYYY-MM-DD")
-    setFromDate(start)
-    setToDate(end)
+    setFromDate(formattedStartDate)
+    setToDate(formattedEndDate)
   }
 
   const loadArticles = useCallback(async () => {
@@ -121,10 +127,10 @@ function App() {
 
         {dateValue === "custom" && (
           <DatePicker
-            selected={fromDate}
+            selected={customStartDate}
             onChange={onDatePickerChange}
-            startDate={fromDate}
-            endDate={toDate}
+            startDate={customStartDate}
+            endDate={customEndDate}
             selectsRange
           />
         )}

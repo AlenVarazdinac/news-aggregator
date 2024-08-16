@@ -10,8 +10,6 @@ export const fetchArticles = async (options) => {
     categoryFilter = "all",
   } = options || {}
 
-  console.log("fetching articles...", keyword)
-
   let articles = []
 
   if (sourceFilter === "newsapi") {
@@ -21,7 +19,6 @@ export const fetchArticles = async (options) => {
       endDate,
       categoryFilter
     )
-    console.log("newsApiArticles", articles)
   }
 
   if (sourceFilter === "theguardian") {
@@ -31,7 +28,6 @@ export const fetchArticles = async (options) => {
       endDate,
       categoryFilter
     )
-    console.log("guardianArticles", articles)
   }
 
   if (sourceFilter === "newyorktimes") {
@@ -41,7 +37,6 @@ export const fetchArticles = async (options) => {
       endDate,
       categoryFilter
     )
-    console.log("new york times articles", articles)
   }
 
   return articles
@@ -82,10 +77,6 @@ const newsApiRequest = async (keyword, startDate, endDate, categoryFilter) => {
       sourceFilter: article.sourceFilter?.name,
     })
   })
-
-  console.log("NewsApi", res.data)
-  console.log("articles", articles)
-  // setArticles(articles)
   return articles
 }
 
@@ -112,8 +103,6 @@ const guardianRequest = async (keyword, startDate, endDate, categoryFilter) => {
     console.log("Something went wrong")
     return
   }
-
-  console.log("res guardian", res.data.response.results)
 
   let articles = []
   res.data.response.results.map((article) => {
@@ -157,8 +146,6 @@ const newYorkTimesRequest = async (
     console.log("Something went wrong")
     return
   }
-
-  console.log('ny times res', res.data.response.docs)
 
   let articles = []
   res.data.response.docs.map((article) => {
