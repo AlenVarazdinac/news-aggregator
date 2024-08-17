@@ -108,6 +108,14 @@ function App() {
     setCategory(selectedCategory)
   }
 
+  const saveUserFilters = () => {
+    console.log('Saving filters...')
+  }
+
+  const loadUserFilters = () => {
+    console.log('Loading filters...')
+  }
+
   return (
     <>
       <div className="filter">
@@ -149,17 +157,24 @@ function App() {
           onSelectChange={handleCategoryChange}
         />
 
+        <div className="preferred-filters">
+          <button id="save-filters" onClick={saveUserFilters}>Save filters</button>
+          <button id="load-filters" onClick={loadUserFilters}>Load filters</button>
+        </div>
+      </div>
+
+      <div className="articles">
         {loading && <p>Loading articles...</p>}
         {articles.length === 0 && !loading && <p>No articles found.</p>}
         {!loading &&
           articles.map((article, index) => (
             <div key={index} className="article">
+              {article.image && <img src={article.image} alt={article.title} />}
               <h3>{article.title}</h3>
-              <p>{article.publishedAt}</p>
+              <p>{moment(article.publishedAt).format('LLL')}</p>
               <a href={article.url} target="_blank" rel="noopener noreferrer">
                 Read more
               </a>
-              {article.image && <img src={article.image} alt={article.title} />}
             </div>
           ))}
       </div>
