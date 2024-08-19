@@ -1,0 +1,70 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.filter input,
+.filter select:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.filter .filter-keyword-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  display: flex;
+}
+
+.preferred-filters {
+  display: flex;
+  column-gap: 10px;
+}
+
+.preferred-filters button {
+  flex-grow: 1;
+  padding: 12px 16px;
+  font-size: 16px;
+  max-height: 46px;
+  outline: 0;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.preferred-filters button#save-filters {
+  background-color: var(--accent-color);
+  border: 2px solid transparent;
+  color: #ffffff;
+}
+
+.preferred-filters button#save-filters:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid var(--accent-color);
+}
+
+.preferred-filters button#load-filters {
+  border: 2px solid var(--accent-color);
+  background-color: #ffffff;
+}
+
+.preferred-filters button#load-filters:hover {
+  border: 2px solid var(--accent-color);
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .filter {
+    flex-direction: row;
+  }
+
+  .filter input,
+  .filter select:not(:last-child) {
+    margin-bottom: 0;
+    margin-right: 6px;
+  }
+}

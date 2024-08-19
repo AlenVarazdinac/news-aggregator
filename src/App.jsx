@@ -3,7 +3,8 @@ import moment from "moment"
 import { fetchArticles } from "./services/fetchArticles"
 import "react-datepicker/dist/react-datepicker.css"
 import "./App.css"
-import Filters from "./components/Filters"
+import Filters from "./components/filters/Filters"
+import ArticleList from "./components/articleList/ArticleList"
 
 function App() {
   const [keywordTerm, setKeywordTerm] = useState("")
@@ -133,21 +134,7 @@ function App() {
         onLoadFilters={loadUserFilters}
       />
 
-      <div className="articles">
-        {loading && <p>Loading articles...</p>}
-        {articles.length === 0 && !loading && <p>No articles found.</p>}
-        {!loading &&
-          articles.map((article, index) => (
-            <div key={index} className="article">
-              {article.image && <img src={article.image} alt={article.title} />}
-              <h3>{article.title}</h3>
-              <p>{moment(article.publishedAt).format("LLL")}</p>
-              <a href={article.url} target="_blank" rel="noopener noreferrer">
-                Read more
-              </a>
-            </div>
-          ))}
-      </div>
+      <ArticleList articles={articles} loading={loading} />
     </>
   )
 }

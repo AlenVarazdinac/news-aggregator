@@ -1,4 +1,5 @@
-import Article from "./components/Article"
+import Article from "../article/Article"
+import "./articleList.css"
 
 const ArticleList = ({ articles, loading }) => (
   <div className="articles">

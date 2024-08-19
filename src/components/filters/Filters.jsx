@@ -1,11 +1,12 @@
-import BaseSelect from "./BaseSelect"
+import BaseSelect from "../BaseSelect"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import {
   categoryOptions,
   dateOptions,
   sourceOptions,
-} from "../utils/filterOptions"
+} from "../../utils/filterOptions"
+import "./filters.css"
 
 const Filters = ({
   keywordTerm,

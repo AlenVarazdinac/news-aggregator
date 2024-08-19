@@ -1,6 +1,7 @@
 import moment from "moment"
+import "./article.css"
 
-const Article = ({ article }) => (
+const Article = ({ article, index }) => (
   <div key={index} className="article">
     {article.image && <img src={article.image} alt={article.title} />}
     <h3>{article.title}</h3>
