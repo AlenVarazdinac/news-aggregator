@@ -1,14 +1,40 @@
-# React + Vite
+# Setup and Installation
+1. Make sure you have npm installed on your system
+2. Clone this repository
+```
+git clone git@github.com:AlenVarazdinac/news-aggregator.git
+cd news-aggregator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```
+3. Install the dependencies
+```
+npm install
+```
+4. Get the API keys from NewsAPI, The Guardian and NewYork Times.
+NewsApi: https://newsapi.org/
+The Guardian: https://open-platform.theguardian.com/access/
+NewYork Times: https://developer.nytimes.com/
 
-Currently, two official plugins are available:
+5. Create .env file and add the API keys
+```
+VITE_NY_TIMES_API_KEY=
+VITE_NEWSAPI_KEY=
+VITE_GUARDIAN_API_KEY=
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Running the app
+To run the application run the following command:
+```
+npm run dev
+```
 
+# Docker
+To build a Docker image run the following command:
+```
+docker build -t news-aggregator .
+```
 
-
-1. https://developer.nytimes.com/ https://developer.nytimes.com/my-apps/0f48c9d9-e9e2-4329-b6ff-f805d2b13cfc
-2. https://newsapi.org/ https://newsapi.org/docs/endpoints/everything
-3. https://open-platform.theguardian.com/documentation/ https://open-platform.theguardian.com/documentation/
+To run built Docker image run the following command:
+```
+docker run -p 3000:3000 news-aggregator
+```
