@@ -4,7 +4,6 @@
 ```
 git clone git@github.com:AlenVarazdinac/news-aggregator.git
 cd news-aggregator
-
 ```
 3. Install the dependencies
 ```
