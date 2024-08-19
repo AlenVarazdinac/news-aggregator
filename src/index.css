@@ -10,6 +10,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --accent-color: #7c8aff;
+  --accent-color-hover: #6672dc;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 input, select {
@@ -24,9 +31,11 @@ input, select {
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
   background: rgb(251, 251, 251);
   transition: all 0.1s ease 0s;
+  height: 46px;
+  max-height: 46px;
 }
 
 input:focus, input:focus-visible, select:focus{
-  border: 2px solid rgb(124, 138, 255);
+  border: 2px solid var(--accent-color);
   outline: none;
 }

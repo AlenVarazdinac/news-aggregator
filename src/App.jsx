@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import moment from "moment"
 import { fetchArticles } from "./services/fetchArticles"
-import BaseSelect from "./components/BaseSelect"
-import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import "./App.css"
+import Filters from "./components/Filters"
 
 function App() {
   const [keywordTerm, setKeywordTerm] = useState("")
@@ -21,37 +20,17 @@ function App() {
   const [customStartDate, setCustomStartDate] = useState(new Date())
   const [customEndDate, setCustomEndDate] = useState(null)
 
-  const categoryOptions = [
-    { value: "all", label: "All" },
-    { value: "cars", label: "Cars" },
-    { value: "business", label: "Business" },
-    { value: "food", label: "Food" },
-    { value: "health", label: "Health" },
-    { value: "science", label: "Science" },
-    { value: "sports", label: "Sports" },
-    { value: "technology", label: "Technology" },
-  ]
-
-  const sourceOptions = [
-    { value: "newsapi", label: "News API" },
-    { value: "newyorktimes", label: "New York Times" },
-    { value: "theguardian", label: "The Guardian" },
-  ]
-
-  const dateOptions = [
-    { value: "7", label: "Last 7 Days" },
-    { value: "14", label: "Last 14 Days" },
-    { value: "30", label: "Last 30 Days" },
-    { value: "custom", label: "Custom" },
-  ]
-
   const onDatePickerChange = (dates) => {
     const [start, end] = dates
     setCustomStartDate(start)
     setCustomEndDate(end)
     if (start === null || end === null) return
-    const formattedStartDate = moment(start).format("YYYY-MM-DD")
-    const formattedEndDate = moment(end).format("YYYY-MM-DD")
+    setDates(start, end)
+  }
+
+  const setDates = (startDate, endDate) => {
+    const formattedStartDate = moment(startDate).format("YYYY-MM-DD")
+    const formattedEndDate = moment(endDate).format("YYYY-MM-DD")
     setFromDate(formattedStartDate)
     setToDate(formattedEndDate)
   }
@@ -109,59 +88,50 @@ function App() {
   }
 
   const saveUserFilters = () => {
-    console.log('Saving filters...')
+    const filter = {
+      keyword: keywordTerm,
+      dateValue,
+      toDate,
+      fromDate,
+      source,
+      category,
+    }
+    localStorage.setItem("userFilters", JSON.stringify(filter))
   }
 
   const loadUserFilters = () => {
-    console.log('Loading filters...')
+    const storedFilters = localStorage.getItem("userFilters")
+    if (!storedFilters) return
+    const filters = JSON.parse(storedFilters)
+
+    setKeywordTerm(filters.keyword)
+    setDateValue(filters.dateValue)
+    if (filters.dateValue === "custom") {
+      setCustomStartDate(filters.fromDate)
+      setCustomEndDate(filters.toDate)
+      setDates(filters.fromDate, filters.toDate)
+    }
+    setSource(filters.source)
+    setCategory(filters.category)
   }
 
   return (
     <>
-      <div className="filter">
-        <input
-          type="text"
-          value={keywordTerm}
-          onChange={handleKeywordChange}
-          placeholder="Search for articles..."
-        />
-
-        <BaseSelect
-          name="date"
-          value={dateValue}
-          options={dateOptions}
-          onSelectChange={handleDateChange}
-        />
-
-        {dateValue === "custom" && (
-          <DatePicker
-            selected={customStartDate}
-            onChange={onDatePickerChange}
-            startDate={customStartDate}
-            endDate={customEndDate}
-            selectsRange
-          />
-        )}
-
-        <BaseSelect
-          name="source"
-          value={source}
-          options={sourceOptions}
-          onSelectChange={handleSourceChange}
-        />
-
-        <BaseSelect
-          name="category"
-          value={category}
-          options={categoryOptions}
-          onSelectChange={handleCategoryChange}
-        />
-
-        <div className="preferred-filters">
-          <button id="save-filters" onClick={saveUserFilters}>Save filters</button>
-          <button id="load-filters" onClick={loadUserFilters}>Load filters</button>
-        </div>
-      </div>
+      <Filters
+        keywordTerm={keywordTerm}
+        dateValue={dateValue}
+        customStartDate={customStartDate}
+        customEndDate={customEndDate}
+        source={source}
+        category={category}
+        onKeywordChange={handleKeywordChange}
+        onDateChange={handleDateChange}
+        onDatePickerChange={onDatePickerChange}
+        onSourceChange={handleSourceChange}
+        onCategoryChange={handleCategoryChange}
+        onSaveFilters={saveUserFilters}
+        onLoadFilters={loadUserFilters}
+      />
 
       <div className="articles">
         {loading && <p>Loading articles...</p>}
@@ -171,7 +141,7 @@ function App() {
             <div key={index} className="article">
               {article.image && <img src={article.image} alt={article.title} />}
               <h3>{article.title}</h3>
-              <p>{moment(article.publishedAt).format('LLL')}</p>
+              <p>{moment(article.publishedAt).format("LLL")}</p>
               <a href={article.url} target="_blank" rel="noopener noreferrer">
                 Read more
               </a>
